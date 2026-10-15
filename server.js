@@ -7,6 +7,9 @@ const crypto = require('crypto');
 const path = require('path');
 
 const app = express();
+// Railway terminates HTTPS at its proxy; trust the forwarded protocol so
+// express-session can issue secure cookies for production requests.
+app.set('trust proxy', 1);
 const db = new Database(path.join(__dirname, 'trevox.db'));
 const PORT = Number(process.env.PORT || 3000);
 const SITE_URL = process.env.SITE_URL || `http://localhost:${PORT}`;
